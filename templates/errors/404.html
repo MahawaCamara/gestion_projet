@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #333;
+        }
+        p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+            margin: 20px 0;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>404 - Page non trouvée</h1>
+    <img src="{% static 'img/erreur-404' %}" alt="Erreur 404">
+    <p>La page que vous recherchez n'existe pas.</p>
+    <a href="/">Retour à l'accueil</a>
+</body>
+</html>

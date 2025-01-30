@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block title %} Rechercher une tache {%endblock%}
+{% block content %}
+<h1>Rechercher une tache</h1>
+<form method="get" action="{% url 'recherche_tache' %}">
+    <input type="text" name="q" placeholder="Rechercher une tâche" value="{{ query }}">
+    <button type="submit">Rechercher</button>
+</form>
+<ul>
+    {% for tache in taches %}
+        <li>
+            <a href="{% url 'detail_tache' tache.pk %}">{{ tache.titre }}</a> - {{ tache.description|truncatewords:10 }}
+        </li>
+    {% endfor %}
+</ul>
+ {% endblock %} 

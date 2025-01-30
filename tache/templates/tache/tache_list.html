@@ -1,0 +1,67 @@
+
+{% extends 'base.html' %}
+{% block title %} Listes Des Taches {%endblock%}
+{% block content %}
+<style>
+  ul li{text-align: center;
+    list-style-type: none;
+}
+</style>
+<div class="d-flex justify-content-end"> <a href = "{% url 'nouvelle_tache'%}"class=" custom-link text-decoration-none badge text-bg-primary fs-4 mt-5">Ajouter une tâche </a></div>
+{% if messages %}
+    <div class="alert alert-dismissible">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<h1  class="text-center">Listes Des Taches</h1>
+  <br>
+      <table class="table caption-top ,fs-5, table table-striped w-100 text-center">
+          <thead class="table table-dark fs-5">
+            <tr>
+              <th scope="col">NOM</th>
+              <th scope="col">ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tache in page_obj %}
+                <tr class="fs-4">
+                  <td>
+                      <ul>
+                          <li>
+                              <a href="{% url 'detail_tache' tache.pk %}" class="text-decoration-none">{{ tache.titre }}</a> 
+                          </li>
+                      </ul>
+                  </td>
+                  <td>
+                      <a href="{% url 'modifier_tache' tache.pk %}" class="badge text-bg-info text-decoration-none">Modifier</a>
+                      <a href="{% url 'supprimer_tache' tache.pk %}" class="badge text-bg-danger text-decoration-none">Supprimer</a> 
+                  </td>
+              {% empty %}
+              <li>Aucune tâche disponible</li>
+              {% endfor %}
+          </tbody>
+      </table>
+      <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Première</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Dernière &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+ {% endblock %} 

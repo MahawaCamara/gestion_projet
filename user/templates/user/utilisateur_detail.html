@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Details de l'tilisateur {%endblock%}
+{% block content %}
+<br>
+<br>
+<ul>
+    <h1>Détails de l'utilisateur</h1>
+    <p><strong>Nom de l'utilisateur :</strong> {{ utilisateur.nom }}</p>
+    <p><strong>Email :</strong> {{ utilisateur.email }}</p>
+    <p><strong>Date d'inscription :</strong> {{ utilisateur.date_inscription }}</p>
+</ul>
+<div class="d-flex justify-content-end "> <a href="{% url 'user:utilisateur_list' %}" class="fs-4 text-decoration-none badge text-bg-primary fs-4 mt-5"> Retour à la liste des  utilisateurs</a></div>
+ {% endblock %} 

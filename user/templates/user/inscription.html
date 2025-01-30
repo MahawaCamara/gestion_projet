@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if is_edit %}
+        Modifier
+    {% else %}
+        Créer
+    {% endif %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            height: 100vh; /* Prend toute la hauteur de l'écran */
+            background-color: rgb(246, 248, 250); /* Couleur de fond */
+            display: flex; /* Active le mode flex */
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            margin: 0; /* Supprime les marges par défaut */
+        }
+
+        .form-container {
+            background: white; /* Fond blanc */
+            padding: 30px; /* Espacement interne */
+            border-radius: 8px; /* Coins arrondis */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre */
+            width: 100%;
+            max-width: 400px; /* Largeur maximale */
+        }
+
+        h2 {
+            font-size: 1.8rem; /* Taille du titre */
+            color: #333; /* Couleur du texte */
+            margin-bottom: 20px; /* Espacement sous le titre */
+        }
+
+        .btn {
+            width: 48%; /* Largeur des boutons pour une bonne répartition */
+        }
+
+        .text-danger {
+            font-size: 0.9rem; /* Taille plus petite pour les messages d'erreur */
+            margin-top: 5px; /* Espacement au-dessus des erreurs */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        {% if messages %}
+            <div class="alert alert-dismissible">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <h2>
+            {% if is_edit %}
+                Modifier un utilisateur
+            {% else %}
+                Créer un utilisateur
+            {% endif %}
+        </h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Champ Email -->
+            <div class="form-group mb-3">
+                <label for="id_email">Email :</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {% for error in form.email.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Champ Nom -->
+            <div class="form-group mb-3">
+                <label for="id_nom">Nom :</label>
+                {{ form.nom }}
+                {% if form.nom.errors %}
+                    <div class="text-danger">
+                        {% for error in form.nom.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Champ Mot de passe -->
+            <div class="form-group mb-3">
+                <label for="id_password1">Mot de passe :</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Champ Confirmation du mot de passe -->
+            <div class="form-group mb-3">
+                <label for="id_password2">Confirmation du mot de passe :</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Boutons -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">
+                    {% if is_edit %}
+                        Modifier
+                    {% else %}
+                        Créer
+                    {% endif %}
+                </button>
+                <a href="{% url 'user:login' %}" class="btn btn-danger">Annuler</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

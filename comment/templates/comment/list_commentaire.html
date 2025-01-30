@@ -1,0 +1,56 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1 class="text-center">Tous les Commentaires</h1>
+    <table class="table caption-top fs-5 table-striped w-100 text-center">
+        <thead class="thead-dark">
+            <tr class="table table-dark fs-5">
+                <th>Tâche</th>
+                <th>Contenu</th>
+                <th colspan="2" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commentaire in page_obj %}
+            <tr>
+                <td>{{ commentaire.tache.titre }}</td>
+                <td>
+                    <a href="{% url 'detail_commentaire' commentaire.id %}" class="text-decoration-none">{{ commentaire.contenu|truncatewords:10 }}</a>  <!-- Lien vers les détails -->
+                </td>
+                <td>
+                    <a href="{% url 'modifier_commentaire' commentaire.tache.pk commentaire.pk %}" class="badge text-bg-info  text-decoration-none">Modifier</a>
+                    <a href="{% url 'supprimer_commentaire' commentaire.tache.pk commentaire.pk %}" class="badge text-bg-danger text-decoration-none">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Aucun commentaire disponible.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Première</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Dernière &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

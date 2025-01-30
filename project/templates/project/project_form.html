@@ -1,0 +1,63 @@
+{% extends "base.html" %} 
+<div class="">
+    {% block content %} 
+    <br>
+    <br>
+    <h1>Ajouter un Projet</h1>
+     <!-- Afficher les messages -->
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mt-2">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Formulaire d'ajout du projet -->
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+
+        <!-- Champ Nom -->
+        <div class="form-group">
+            {{ form.nom }}  <!-- Champ de saisie -->
+            {% if form.nom.errors %}
+                <div style="color: red;">
+                    {% for error in form.nom.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Champ Description -->
+        <div class="form-group" style="margin-bottom: 15px;">
+            {{ form.description }}  <!-- Champ de saisie -->
+            {% if form.description.errors %}
+                <div style="color: red;">
+                    {% for error in form.description.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Champ Image -->
+        <div class="form-group" style="margin-bottom: 15px;">
+            {{ form.image }}  <!-- Champ image -->
+            {% if form.image.errors %}
+                <div style="color: red;">
+                    {% for error in form.image.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Boutons -->
+        <div class="d-flex justify-content-between mt-3 ">
+            <button type="submit" class="btn btn-success fs-5">Enregistrer</button>
+            <button type="submit" name="cancel" value="true" class="btn btn-danger fs-4">Annuler</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

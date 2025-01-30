@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if messages %}
+    <div class="alert-container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mt-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="container mt-4">
+    <h1 class="text-center">
+        {% if commentaire %}
+            Modifier le commentaire pour la tâche : {{ tache.titre }}
+        {% else %}
+            Ajouter un commentaire pour la tâche : {{ tache.titre }}
+        {% endif %}
+    </h1>
+
+    <form method="POST">
+        {% load widget_tweaks %}
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="contenu" class="form-label">Contenu du commentaire :</label>
+            {{ form.contenu|add_class:"form-control" }}
+        </div>
+    <div class="d-flex justify-content-between">
+            <div>
+                <button type="submit" class="btn btn-primary">
+                    {% if commentaire %}
+                        Modifier le commentaire
+                    {% else %}
+                        Ajouter le commentaire
+                    {% endif %}
+                </button>
+            </div>
+            <div>
+                {% if commentaire %}
+                <a href="{% url 'list_comment_all' %}" class="btn btn-danger ">  Retour à la liste des commentaires</a>
+                {% else %}
+                <a href="{% url 'detail_tache' tache.pk %}" class="btn btn-danger">  Retour aux details de la tâche </a>
+                {% endif %}
+            </div>
+    </div>
+</form>
+</div>
+{% endblock %}
+
+ 

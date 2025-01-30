@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+{% block title %} Listes Des Utilisateurs {%endblock%}
+{% block content %}
+<div class="d-flex justify-content-end"> <a href = "{% url 'user:register' %}" class=" custom-link text-decoration-none badge text-bg-primary fs-4 mt-5">Ajouter un utilisateur </a></div>
+<div class="container mt-5">
+    <h2 class="mb-4">Liste des utilisateurs</h2>
+
+    <!-- Afficher les messages -->
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mt-2">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <table class="table caption-top ,fs-5, table table-striped w-100 text-center">
+        <thead class="table table-dark fs-5">
+            <tr>
+                <th>Nom de l'utilisateur</th>
+                <th>Statut</th>
+                <th>Actions</th>
+                <th>Authentification</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilisateur in page_obj %}
+            <tr>
+                <td>
+                    <a href="{% url 'user:utilisateur_detail' utilisateur.pk %}" class="text-decoration-none">
+                        {{ utilisateur.nom }}
+                    </a>
+                </td>
+                <td>
+                    {% if utilisateur in utilisateurs_connectes %}
+                        <span class="badge bg-success fs-6">Connecté</span>
+                    {% else %}
+                        <span class="badge bg-danger fs-6">Déconnecté</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'user:edit_user' utilisateur.pk %}" class="badge text-bg-info text-decoration-none fs-6">Modifier</a>
+                    <a href="{% url 'user:utilisateur_confirm_delete' utilisateur.pk %}" class="badge text-bg-danger text-decoration-none fs-6">Supprimer</a>
+                </td>
+                <td>
+                    {% if utilisateur in utilisateurs_connectes %}
+                        <a href="{% url 'user:utilisateur_auth_toggle' utilisateur.pk 'deconnecter' %}" class="btn btn-warning btn-sm fs-6">Déconnecter</a>
+                    {% else %}
+                        <a href="{% url 'user:utilisateur_auth_toggle' utilisateur.pk 'connecter' %}" class="btn btn-success btn-sm fs-6">Connecter</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Première</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Précédente</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Suivante</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Dernière &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

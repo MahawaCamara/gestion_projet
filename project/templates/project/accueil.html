@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block content %}
+<style>
+    /* Le swiper prend toute la largeur et la hauteur de l'écran */
+    .swiper {
+        width: 100%;  /* 100% de la largeur de la fenêtre */
+        height: 100vh; /* 100% de la hauteur de la fenêtre */
+        overflow: hidden; /* Masquer les débordements */
+    }
+
+    .swiper-wrapper {
+        display: flex; /* Affichage horizontal des slides */
+    }
+
+    .swiper-slide {
+        width: 100%;  /* Chaque slide occupe 100% de la largeur de la fenêtre */
+        height: 100%; /* Chaque slide occupe 100% de la hauteur */
+        box-sizing: border-box;
+    }
+
+    /* Ajustement de l'image pour qu'elle prenne toute la largeur sans déformation */
+    .swiper-slide img {
+        width: 100%;  /* L'image prend toute la largeur du conteneur */
+        height: 100%; /* L'image couvre toute la hauteur */
+        object-fit: cover;  /* L'image couvre toute la zone sans être déformée */
+        object-position: center; /* Centrer l'image si elle est plus petite que l'espace disponible */
+    }
+
+    /* Masquer toute barre de défilement */
+    body {
+        overflow-x: hidden; /* Masquer les défilements horizontaux */
+    }
+</style>
+
+<div class="container">
+    {% if projets_recents %}
+        <div class="swiper mySwiper mt-0">
+            <div class="swiper-wrapper">
+                {% for projet in projets_recents %}
+                    <div class="swiper-slide">
+                        <!-- Affichage de l'image du projet -->
+                        <img src="{% if projet.image %}{{ projet.image.url }}{% else %}{% static 'images/default_image.jpg' %}{% endif %}" alt="{{ projet.nom }}">
+
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    {% else %}
+        <p class="text-center">Aucun projet récent n'est disponible pour le moment.</p>
+    {% endif %}
+</div>
+
+<!-- Import SwiperJS CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper@10.0.0/swiper-bundle.min.css">
+
+<!-- Import SwiperJS JS -->
+<script src="https://unpkg.com/swiper@10.0.0/swiper-bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.mySwiper', {
+            loop: true,  // Défiler en boucle
+            slidesPerView: 1,  // Afficher 1 élément à la fois
+            spaceBetween: 0,  // Pas d'espace entre les éléments
+            autoplay: {
+                delay: 3000,  // Délai entre chaque slide (en ms)
+                disableOnInteraction: false,  // Ne pas désactiver l'autoplay lors de l'interaction
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Détails du commentaire{%endblock%}
+{% block content %}
+<br>
+<br>
+<h1>Commentaire de {{ commentaire.utilisateur.nom }}</h1>
+    <h3></h3>
+    <p><strong>Contenu du commentaire : </strong><p>{{ commentaire.contenu }}</p></p>
+    <p><strong> Tâche associée : </strong> {{ commentaire.tache.titre }}</p>
+    <div class="d-flex justify-content-end "> <a href="{% url 'list_comment_all' %}" class="fs-4 text-decoration-none badge text-bg-danger fs-4 mt-5"> Retour à la liste des commentaires</a></div>
+ {% endblock %} 

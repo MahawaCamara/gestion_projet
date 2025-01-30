@@ -1,0 +1,73 @@
+{% extends "base.html" %} 
+{% block content %}
+<br>
+{% if messages %}
+    <div class="alert alert-dismissible">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+    <h2>Ajouter une tâche</h2> 
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        
+        <!-- Champ Titre -->
+        <div class="form-group">
+            {{ form.titre }}
+            {% if form.titre.errors %}
+                <div class="text-danger">
+                    {% for error in form.titre.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Champ Description -->
+        <div class="form-group">
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="text-danger">
+                    {% for error in form.description.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Champ Projet -->
+        <div class="form-group">
+            {{ form.projet }}
+            {% if form.projet.errors %}
+                <div class="text-danger">
+                    {% for error in form.projet.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Champ Assigné à -->
+        <div class="form-group">
+            {{ form.assigné_a }}
+            {% if form.assigné_a.errors %}
+                <div class="text-danger">
+                    {% for error in form.assigné_a.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Boutons -->
+        <div class="d-flex justify-content-between mt-3 ">
+            <button type="submit" class="btn btn-success fs-5">Enregistrer</button>
+            <button type="submit" name="cancel" value="true" class="btn btn-danger  fs-4">Annuler</button>
+        </div>
+    </form>
+
+{% endblock content %}

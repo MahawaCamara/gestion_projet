@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Details de la tache {%endblock%}
+{% block content %}
+<br>
+<br>
+<h1>Détails de la tache</h1>
+    <h3></h3>
+    <p><strong>Titre de la tâche : </strong>{{ tache.titre}}</p>
+    <p><strong> Description de la tâche : </strong> {{ tache.description }}</p>
+    <p><strong>Projet :</strong> {{ tache.projet.nom }}</p>
+    <p><strong>Assigné à :</strong> 
+        {% for utilisateur in tache.assigné_a.all %}
+            {{ utilisateur.nom }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p><strong>Commentaires : </strong>
+        {% for commentaire in tache.commentaires.all %}
+        <p>{{ commentaire.contenu }}</p>
+        {% endfor %}
+    </p>
+    <div class="d-flex justify-content-between "> 
+        <a href="{% url 'ajouter_commentaire' tache_pk=tache.pk %}" class="text-decoration-none badge text-bg-primary fs-4 mt-5">Ajouter un commentaire</a>
+        <a href="{% url 'list_tache' %}" class="text-decoration-none badge text-bg-danger fs-4 mt-5"> Retour à la liste des tâches</a>
+    </div>
+ {% endblock %} 

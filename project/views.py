@@ -96,8 +96,8 @@ def envoyer_email(request):
         # Envoi de l'email
         subject = "Voici le lien GitHub du projet"
         message = f"Bonjour,\n\nVoici le lien GitHub de mon projet Gestion des projets : {github_url}\n\nCordialement."
-        from_email = 'mahawacamaracamara@gmail.com'  # Votre adresse e-mail
-        recipient_list = ['sow1998dara@gmail.com']  # L'adresse du destinataire
+        from_email = 'mahawacamaracamara278@gmail.com'  # Votre adresse e-mail
+        recipient_list = ['mahawacamaracamara278@gmail.com']  # L'adresse du destinataire
 
         try:
             send_mail(subject, message, from_email, recipient_list)

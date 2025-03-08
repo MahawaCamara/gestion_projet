@@ -8,14 +8,14 @@
 </style>
 <br>
 <div class="d-flex justify-content-between">
-    <div>
+    <div class="mt-4">
         <form method="POST" action="{% url 'envoyer_email' %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Envoyer le lien GitHub par email</button>
         </form>
         
     </div>
-    <div>
+    <div  class="mt-4">
         <a href="{% url 'nouveau_project' %}" class="custom-link text-decoration-none badge text-bg-primary fs-5">
             Ajouter un projet
         </a>
